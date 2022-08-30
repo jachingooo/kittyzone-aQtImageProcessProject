@@ -54,6 +54,7 @@
 
     编写了chg函数用于交换像素点，对于翻转、旋转等编辑操作无非是对像素点进行交换来实现整
 体图像的编辑。
+   
     ```
     void swap(double& a, double& b)
     {
@@ -97,7 +98,8 @@
                     }
                 }
             }
-        }```
+        }
+       ```
 - 功能3：实现对图像亮度的调整，此功能依赖于对RGB三原色的共同增加
 - 功能4：实现对图像冷暖色的调整，此功能依赖于对单独通道的调整。
         功能3与功能4逻辑相同，都是对RGB三原色的调整，在判定为某种操作后，遍历所有像素点对RGB
@@ -147,20 +149,20 @@ openimage与save函数；同时在调用相应的图片函数后，调用了相�
     的方式进行通信连接。
         具体实现如下：
         ```
-            connect(ui->actionopen, SIGNAL(triggered(bool)), this, SLOT(OpenImg()));
-            connect(ui->actionsave, SIGNAL(triggered(bool)), this, SLOT(Save()));
-            connect(ui->button_guassion, SIGNAL(clicked(bool)), this, SLOT(GaussionImg()));
-            connect(ui->button_back, SIGNAL(clicked(bool)), this, SLOT(Back()));
-            connect(ui->button_flipupdown, SIGNAL(clicked(bool)), this, SLOT(Flipupdown()));
-            connect(ui->button_flipleftright, SIGNAL(clicked(bool)), this, SLOT(Flipleftright()));
+            connect(ui->actionopen, SIGNAL(triggered(bool)), this, SLOT(OpenImg()));<br>
+            connect(ui->actionsave, SIGNAL(triggered(bool)), this, SLOT(Save()));<br>
+            connect(ui->button_guassion, SIGNAL(clicked(bool)), this, SLOT(GaussionImg()));<br>
+            connect(ui->button_back, SIGNAL(clicked(bool)), this, SLOT(Back()));<br>
+            connect(ui->button_flipupdown, SIGNAL(clicked(bool)), this, SLOT(Flipupdown()));<br>
+            connect(ui->button_flipleftright, SIGNAL(clicked(bool)), this, SLOT(Flipleftright()));<br>
             connect(ui->button_lightup, SIGNAL(clicked(bool)), this, SLOT(lightup()));
-            connect(ui->button_lightdown, SIGNAL(clicked(bool)), this, SLOT(lightdown()));
-            connect(ui->button_cut,SIGNAL(clicked(bool)),this,SLOT(Cut()));
-            connect(ui->rotate,SIGNAL(clicked(bool)),this,SLOT(rotate()));
-            connect(ui->button_cat,SIGNAL(clicked(bool)),this,SLOT(Cat()));
-            connect(ui->button_warm,SIGNAL(clicked(bool)),this,SLOT(warm()));
-            connect(ui->button_cold,SIGNAL(clicked(bool)),this,SLOT(cold()));
-            connect(ui->button_big,SIGNAL(clicked(bool)),this,SLOT(big()));          
+            connect(ui->button_lightdown, SIGNAL(clicked(bool)), this, SLOT(lightdown()));<br>
+            connect(ui->button_cut,SIGNAL(clicked(bool)),this,SLOT(Cut()));<br>
+            connect(ui->rotate,SIGNAL(clicked(bool)),this,SLOT(rotate()));<br>
+            connect(ui->button_cat,SIGNAL(clicked(bool)),this,SLOT(Cat()));<br>
+            connect(ui->button_warm,SIGNAL(clicked(bool)),this,SLOT(warm()));<br>
+            connect(ui->button_cold,SIGNAL(clicked(bool)),this,SLOT(cold()));<br>
+            connect(ui->button_big,SIGNAL(clicked(bool)),this,SLOT(big()));<br>          
             ui->label->setFrameShape(QFrame::Box);
         ```
 
