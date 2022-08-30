@@ -347,8 +347,10 @@ ui界面设计，信号与槽函数等方面的知识，此期间借鉴学习了
 
 
 ## 引用参考
-markdown学习-https://markdown.com.cn/editor/
+markdown学习-https://markdown.com.cn/editor/  
+
 高斯滤波学习- https://blog.csdn.net/u012370185/article/details/90375278?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0-90375278-blog-81637558.pc_relevant_multi_platform_whitelistv4eslandingctr2&spm=1001.2101.3001.4242.1&utm_relevant_index=3
+
 图片缩放学习-https://blog.csdn.net/u013480226/article/details/122491058
 
 
