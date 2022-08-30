@@ -41,25 +41,109 @@
 
 
 ## c++部分
+    编写了chg函数用于交换像素点，对于翻转、旋转等编辑操作无非是对像素点进行交换来实现整
+体图像的编辑。
+    void chg(double& a, double& b)
+    {
+        unsigned char t = a;
+        a = b;
+        b = t;
+    }
 - 功能1：实现高斯滤波，实现图像的平滑化，此功能放在"filter"头文件和"cpp"文件中。
+
 - 功能2：实现图像的上下反转与左右反转，并以此拓展，实现对不同角度的定量旋转
+    定义布尔类型的mode并作为翻转函数的参数，true为上下翻转，false为左右翻转。
+        上下翻转就是对图片以水平中心线为对称轴进行像素点的互换，以高度（height）
+    的二分之一为分界线，调用chg函数。
+        左右翻转与上下翻转同理，以宽度（width）的二分之一为分界线，调用chg函数。
+    代码如下：
+        void Image::Flip(bool mode)
+        {
+            if (mode)
+            {
+                for (int i = 0; i < height / 2; i++)
+                {
+                    for (int j = 0; j < width; j++)
+                    {
+                        chg(data[i][j].R,data[height - i - 1][j].R);
+                        chg(data[i][j].G,data[height - i - 1][j].G);
+                        chg(data[i][j].B,data[height - i - 1][j].B);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < height; i++)
+                {
+                    for (int j = 0; j < width / 2; j++)
+                    {
+                        chg(data[i][j].R,data[i][width - j - 1].R);
+                        chg(data[i][j].G,data[i][width - j - 1].G);
+                        chg(data[i][j].B,data[i][width - j - 1].B);
+                    }
+                }
+            }
+        }
 - 功能3：实现对图像亮度的调整，此功能依赖于对RGB三原色的共同增加
 - 功能4：实现对图像冷暖色的调整，此功能依赖于对单独通道的调整。
+        功能3与功能4逻辑相同，都是对RGB三原色的调整，在判定为某种操作后，遍历所有像素点对RGB
+    进行增加（减少）。
+        代码如下：
+            void Image::Add(double delta)
+            {
+                for (int i = 0; i < height; i++)
+                {
+                    for (int j = 0; j < width; j++)
+                    {
+                        data[i][j].R+=delta;
+                        if(data[i][j].R<0)  data[i][j].R=0;
+                        else if(data[i][j].R>255) data[i][j].R=255;
+            
+                        data[i][j].G+=delta;
+                        if(data[i][j].G<0)  data[i][j].G=0;
+                        else if(data[i][j].G>255) data[i][j].G=255;
+            
+                        data[i][j].B+=delta;
+                        if(data[i][j].B<0)  data[i][j].B=0;
+                        else if(data[i][j].B>255) data[i][j].B=255;
+                    }
+                }
+            }
 - 功能5：将两张照片拼接合并，此功能依赖于不同像素点信息的复制与填充。
 - 功能6：为了实现以上对图片的操作，重构了上学期"readbmp"与"writebmp"函数，使其适应对于
 彩色图片的处理
-以上功能除第一个外，均放在image类中实现。
+以上功能除第一个外，均放在image类中实现。其余代码放在后续链接中。
 
 
 ## qt部分
 - mainwindow主页面：
-，主要学习了信号与槽函数之间的关系，并学会调用已经声明的部分函数。同时为了打开文件编写了
+    主要学习了信号与槽函数之间的关系，并学会调用已经声明的部分函数。同时为了打开文件编写了
 openimage与save函数；同时在调用相应的图片函数后，调用了相应的qlabel中setpixmap函数，实现了
 处理好的图片在label控件中的显示.
-     ''' QImage* img = operational_img.toQImage(operational_img);
-    ui->label->setPixmap(QPixmap::fromImage(*img));
+    显示：
+    QImage* img_seen = operational_img.toQImage(operational_img);
+    ui->label->setPixmap(QPixmap::fromImage(*img_seen));
     ui->label->setAlignment(Qt::AlignCenter);
-     ```
+
+        以下代码体现了信号与槽，用于对象之间的通信，为各个按钮添加相应的被调函数并实现所选操作。
+    在Qt中，发送对象、发送的信号、接收对象、槽可以通过很多种方式进行连接。在此我们使用connect+宏
+    的方式进行通信连接。
+        具体实现如下：
+            connect(ui->actionopen, SIGNAL(triggered(bool)), this, SLOT(OpenImg()));
+            connect(ui->actionsave, SIGNAL(triggered(bool)), this, SLOT(Save()));
+            connect(ui->button_guassion, SIGNAL(clicked(bool)), this, SLOT(GaussionImg()));
+            connect(ui->button_back, SIGNAL(clicked(bool)), this, SLOT(Back()));
+            connect(ui->button_flipupdown, SIGNAL(clicked(bool)), this, SLOT(Flipupdown()));
+            connect(ui->button_flipleftright, SIGNAL(clicked(bool)), this, SLOT(Flipleftright()));
+            connect(ui->button_lightup, SIGNAL(clicked(bool)), this, SLOT(lightup()));
+            connect(ui->button_lightdown, SIGNAL(clicked(bool)), this, SLOT(lightdown()));
+            connect(ui->button_cut,SIGNAL(clicked(bool)),this,SLOT(Cut()));
+            connect(ui->rotate,SIGNAL(clicked(bool)),this,SLOT(rotate()));
+            connect(ui->button_cat,SIGNAL(clicked(bool)),this,SLOT(Cat()));
+            connect(ui->button_warm,SIGNAL(clicked(bool)),this,SLOT(warm()));
+            connect(ui->button_cold,SIGNAL(clicked(bool)),this,SLOT(cold()));
+            ui->label->setFrameShape(QFrame::Box);
+
 
 
 ## 其他
