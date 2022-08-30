@@ -125,7 +125,7 @@
                         else if(data[i][j].B>255) data[i][j].B=255;
                     }
                 }
-            }```
+            }
 - 功能5：将两张照片拼接合并，此功能依赖于不同像素点信息的复制与填充。
 - 功能6：为了实现以上对图片的操作，重构了上学期"readbmp"与"writebmp"函数，使其适应对于
 彩色图片的处理
@@ -142,7 +142,8 @@ openimage与save函数；同时在调用相应的图片函数后，调用了相�
         ```
             QImage* img_seen = operational_img.toQImage(operational_img);
             ui->label->setPixmap(QPixmap::fromImage(*img_seen));
-            ui->label->setAlignment(Qt::AlignCenter);```
+            ui->label->setAlignment(Qt::AlignCenter);
+        ```
 
         以下代码体现了信号与槽，用于对象之间的通信，为各个按钮添加相应的被调函数并实现所选操作。
     在Qt中，发送对象、发送的信号、接收对象、槽可以通过很多种方式进行连接。在此我们使用connect+宏
