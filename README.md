@@ -120,10 +120,10 @@
     主要学习了信号与槽函数之间的关系，并学会调用已经声明的部分函数。同时为了打开文件编写了
 openimage与save函数；同时在调用相应的图片函数后，调用了相应的qlabel中setpixmap函数，实现了
 处理好的图片在label控件中的显示.
-    显示：
-    QImage* img_seen = operational_img.toQImage(operational_img);
-    ui->label->setPixmap(QPixmap::fromImage(*img_seen));
-    ui->label->setAlignment(Qt::AlignCenter);
+        实现显示的代码如下：
+            QImage* img_seen = operational_img.toQImage(operational_img);
+            ui->label->setPixmap(QPixmap::fromImage(*img_seen));
+            ui->label->setAlignment(Qt::AlignCenter);
 
         以下代码体现了信号与槽，用于对象之间的通信，为各个按钮添加相应的被调函数并实现所选操作。
     在Qt中，发送对象、发送的信号、接收对象、槽可以通过很多种方式进行连接。在此我们使用connect+宏
