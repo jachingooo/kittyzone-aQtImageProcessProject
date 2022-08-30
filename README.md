@@ -139,7 +139,7 @@
 openimage与save函数；同时在调用相应的图片函数后，调用了相应的qlabel中setpixmap函数，实现了
 处理好的图片在label控件中的显示.
         实现显示的代码如下：
-        ```
+        ```c++
             QImage* img_seen = operational_img.toQImage(operational_img);  
             ui->label->setPixmap(QPixmap::fromImage(*img_seen));  
             ui->label->setAlignment(Qt::AlignCenter);  
@@ -150,21 +150,20 @@ openimage与save函数；同时在调用相应的图片函数后，调用了相�
     的方式进行通信连接。
         具体实现如下：
         ```c++
-              connect(ui->actionopen, SIGNAL(triggered(bool)), this, SLOT(OpenImg()));
-              connect(ui->actionsave, SIGNAL(triggered(bool)), this, SLOT(Save()));
-              connect(ui->button_guassion, SIGNAL(clicked(bool)), this, SLOT(GaussionImg()));
-              connect(ui->button_back, SIGNAL(clicked(bool)), this, SLOT(Back()));
-              connect(ui->button_flipupdown, SIGNAL(clicked(bool)), this, SLOT(Flipupdown()));
-              connect(ui->button_flipleftright, SIGNAL(clicked(bool)), this, SLOT(Flipleftright()));
-              connect(ui->button_lightup, SIGNAL(clicked(bool)), this, SLOT(lightup()));
-              connect(ui->button_lightdown, SIGNAL(clicked(bool)), this, SLOT(lightdown()));
-              connect(ui->button_cut,SIGNAL(clicked(bool)),this,SLOT(Cut()));
-              connect(ui->rotate,SIGNAL(clicked(bool)),this,SLOT(rotate()));
-              connect(ui->button_cat,SIGNAL(clicked(bool)),this,SLOT(Cat()));
-              connect(ui->button_warm,SIGNAL(clicked(bool)),this,SLOT(warm()));
-              connect(ui->button_cold,SIGNAL(clicked(bool)),this,SLOT(cold()));
-              connect(ui->button_big,SIGNAL(clicked(bool)),this,SLOT(big()));      
-              ui->label->setFrameShape(QFrame::Box)
+    connect(ui->actionopen, SIGNAL(triggered(bool)), this, SLOT(OpenImg()));
+    connect(ui->actionsave, SIGNAL(triggered(bool)), this, SLOT(Save()));
+    connect(ui->button_guassion, SIGNAL(clicked(bool)), this, SLOT(GaussionImg()));
+    connect(ui->button_back, SIGNAL(clicked(bool)), this, SLOT(Back()));
+    connect(ui->button_flipupdown, SIGNAL(clicked(bool)), this, SLOT(Flipupdown()));
+    connect(ui->button_flipleftright, SIGNAL(clicked(bool)), this, SLOT(Flipleftright()));
+    connect(ui->button_lightup, SIGNAL(clicked(bool)), this, SLOT(lightup()));
+    connect(ui->button_lightdown, SIGNAL(clicked(bool)), this, SLOT(lightdown()));
+    connect(ui->button_cut,SIGNAL(clicked(bool)),this,SLOT(Cut()));
+    connect(ui->rotate,SIGNAL(clicked(bool)),this,SLOT(rotate()));
+    connect(ui->button_cat,SIGNAL(clicked(bool)),this,SLOT(Cat()));
+    connect(ui->button_warm,SIGNAL(clicked(bool)),this,SLOT(warm()));
+    connect(ui->button_cold,SIGNAL(clicked(bool)),this,SLOT(cold()));
+    connect(ui->button_big,SIGNAL(clicked(bool)),this,SLOT(big()));
         ```
 
 
