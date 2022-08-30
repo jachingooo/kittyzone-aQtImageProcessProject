@@ -139,6 +139,7 @@
 openimage与save函数；同时在调用相应的图片函数后，调用了相应的qlabel中setpixmap函数，实现了
 处理好的图片在label控件中的显示.
         实现显示的代码如下：
+
         ```c++
             QImage* img_seen = operational_img.toQImage(operational_img);  
             ui->label->setPixmap(QPixmap::fromImage(*img_seen));  
@@ -149,7 +150,8 @@ openimage与save函数；同时在调用相应的图片函数后，调用了相�
     在Qt中，发送对象、发送的信号、接收对象、槽可以通过很多种方式进行连接。在此我们使用connect+宏
     的方式进行通信连接。
         具体实现如下：
-        ```c++
+
+     ```c++
     connect(ui->actionopen, SIGNAL(triggered(bool)), this, SLOT(OpenImg()));
     connect(ui->actionsave, SIGNAL(triggered(bool)), this, SLOT(Save()));
     connect(ui->button_guassion, SIGNAL(clicked(bool)), this, SLOT(GaussionImg()));
@@ -164,7 +166,7 @@ openimage与save函数；同时在调用相应的图片函数后，调用了相�
     connect(ui->button_warm,SIGNAL(clicked(bool)),this,SLOT(warm()));
     connect(ui->button_cold,SIGNAL(clicked(bool)),this,SLOT(cold()));
     connect(ui->button_big,SIGNAL(clicked(bool)),this,SLOT(big()));
-        ```
+    ```
 
 
 
