@@ -148,22 +148,22 @@ openimage与save函数；同时在调用相应的图片函数后，调用了相�
     在Qt中，发送对象、发送的信号、接收对象、槽可以通过很多种方式进行连接。在此我们使用connect+宏
     的方式进行通信连接。
         具体实现如下：
-        ```
-            connect(ui->actionopen, SIGNAL(triggered(bool)), this, SLOT(OpenImg()));<br>
-            connect(ui->actionsave, SIGNAL(triggered(bool)), this, SLOT(Save()));<br>
-            connect(ui->button_guassion, SIGNAL(clicked(bool)), this, SLOT(GaussionImg()));<br>
+        ```c++
+            connect(ui->actionopen, SIGNAL(triggered(bool)), this, SLOT(OpenImg()));
+            connect(ui->actionsave, SIGNAL(triggered(bool)), this, SLOT(Save()));
+            connect(ui->button_guassion, SIGNAL(clicked(bool)), this, SLOT(GaussionImg()));
             connect(ui->button_back, SIGNAL(clicked(bool)), this, SLOT(Back()));<br>
-            connect(ui->button_flipupdown, SIGNAL(clicked(bool)), this, SLOT(Flipupdown()));<br>
-            connect(ui->button_flipleftright, SIGNAL(clicked(bool)), this, SLOT(Flipleftright()));<br>
+            connect(ui->button_flipupdown, SIGNAL(clicked(bool)), this, SLOT(Flipupdown()));
+            connect(ui->button_flipleftright, SIGNAL(clicked(bool)), this, SLOT(Flipleftright()));
             connect(ui->button_lightup, SIGNAL(clicked(bool)), this, SLOT(lightup()));
-            connect(ui->button_lightdown, SIGNAL(clicked(bool)), this, SLOT(lightdown()));<br>
-            connect(ui->button_cut,SIGNAL(clicked(bool)),this,SLOT(Cut()));<br>
-            connect(ui->rotate,SIGNAL(clicked(bool)),this,SLOT(rotate()));<br>
-            connect(ui->button_cat,SIGNAL(clicked(bool)),this,SLOT(Cat()));<br>
-            connect(ui->button_warm,SIGNAL(clicked(bool)),this,SLOT(warm()));<br>
-            connect(ui->button_cold,SIGNAL(clicked(bool)),this,SLOT(cold()));<br>
-            connect(ui->button_big,SIGNAL(clicked(bool)),this,SLOT(big()));<br>          
-            ui->label->setFrameShape(QFrame::Box);
+            connect(ui->button_lightdown, SIGNAL(clicked(bool)), this, SLOT(lightdown()));
+            connect(ui->button_cut,SIGNAL(clicked(bool)),this,SLOT(Cut()));
+            connect(ui->rotate,SIGNAL(clicked(bool)),this,SLOT(rotate()));
+            connect(ui->button_cat,SIGNAL(clicked(bool)),this,SLOT(Cat()));
+            connect(ui->button_warm,SIGNAL(clicked(bool)),this,SLOT(warm()));
+            connect(ui->button_cold,SIGNAL(clicked(bool)),this,SLOT(cold()));
+            connect(ui->button_big,SIGNAL(clicked(bool)),this,SLOT(big()));       
+            ui->label->setFrameShape(QFrame::Box)
         ```
 
 
