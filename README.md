@@ -51,8 +51,35 @@
 
 
 ## c++部分
+    先重新构建了上学期的data类，并定义了一个记录RGB的结构体：
+ 
+   ```c++
+  struct BITMAPINFOHEADER
+{
+    unsigned long    biSize;            //本结构所占用字节数 40字节
+    long             biWidth;           //位图的宽度，以像素为单位
+    long             biHeight;          //位图的高度，以像素为单位
+    unsigned short   biPlanes;          //目标设备的级别，必须为1
+    unsigned short   biBitCount;        //每个像素所需的位数，必须是1（双色）、
+                                        //4（16色）、8（256色）或24（真彩色）之一
+    unsigned long    biCompression;     //位图压缩类型，必须是 0（BI_RGB不压缩）、
+                                        //1（BI_RLE8压缩类型）
+                                        //2（BI_RLE压缩类型）之一
+    unsigned long    biSizeImage;       //位图的大小，以字节为单位
+    long             biXPelsPerMeter;   //位图水平分辨率，每米像素数
+    long             biYPelsPerMeter;   //位图垂直分辨率，每米像素数
+    unsigned long    biClrUsed;         //位图实际使用的颜色表中的颜色数
+    unsigned long    biClrImportant;    //位图显示过程中重要的颜色数
+};
 
-    编写了chg函数用于交换像素点，对于翻转、旋转等编辑操作无非是对像素点进行交换来实现整
+  struct DATA
+  {
+    double R;
+    double G;
+    double B;
+  };
+
+    编写了swap函数用于交换像素点，对于翻转、旋转等编辑操作无非是对像素点进行交换来实现整
 体图像的编辑。
    
     ```
@@ -71,7 +98,7 @@
     的二分之一为分界线，调用chg函数。
         左右翻转与上下翻转同理，以宽度（width）的二分之一为分界线，调用chg函数。
     代码如下：
-   ```c++
+      ```c++
         void Image::Flip(bool code)
         {
             if (code)
@@ -126,6 +153,7 @@
                     }
                 }
             }
+         ```
 - 功能5：将两张照片拼接合并，此功能依赖于不同像素点信息的复制与填充。
 - 功能6：为了实现以上对图片的操作，重构了上学期"readbmp"与"writebmp"函数，使其适应对于
 彩色图片的处理
@@ -141,9 +169,9 @@ openimage与save函数；同时在调用相应的图片函数后，调用了相�
         实现显示的代码如下：
 
         ```c++
-            QImage* img_seen = operational_img.toQImage(operational_img);  
-            ui->label->setPixmap(QPixmap::fromImage(*img_seen));  
-            ui->label->setAlignment(Qt::AlignCenter);  
+        QImage* img_seen = operational_img.toQImage(operational_img);  
+        ui->label->setPixmap(QPixmap::fromImage(*img_seen));  
+        ui->label->setAlignment(Qt::AlignCenter);  
         ```
 
         以下代码体现了信号与槽，用于对象之间的通信，为各个按钮添加相应的被调函数并实现所选操作。
