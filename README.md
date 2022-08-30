@@ -54,7 +54,7 @@
 
     编写了chg函数用于交换像素点，对于翻转、旋转等编辑操作无非是对像素点进行交换来实现整
 体图像的编辑。
-    void chg(double& a, double& b)
+    void swap(double& a, double& b)
     {
         unsigned char t = a;
         a = b;
@@ -68,17 +68,18 @@
     的二分之一为分界线，调用chg函数。
         左右翻转与上下翻转同理，以宽度（width）的二分之一为分界线，调用chg函数。
     代码如下：
-        void Image::Flip(bool mode)
+   ```c++
+        void Image::Flip(bool code)
         {
-            if (mode)
+            if (code)
             {
                 for (int i = 0; i < height / 2; i++)
                 {
                     for (int j = 0; j < width; j++)
                     {
-                        chg(data[i][j].R,data[height - i - 1][j].R);
-                        chg(data[i][j].G,data[height - i - 1][j].G);
-                        chg(data[i][j].B,data[height - i - 1][j].B);
+                        swap(data[i][j].R,data[height - i - 1][j].R);
+                        swap(data[i][j].G,data[height - i - 1][j].G);
+                        swap(data[i][j].B,data[height - i - 1][j].B);
                     }
                 }
             }
@@ -88,18 +89,19 @@
                 {
                     for (int j = 0; j < width / 2; j++)
                     {
-                        chg(data[i][j].R,data[i][width - j - 1].R);
-                        chg(data[i][j].G,data[i][width - j - 1].G);
-                        chg(data[i][j].B,data[i][width - j - 1].B);
+                        swap(data[i][j].R,data[i][width - j - 1].R);
+                        swap(data[i][j].G,data[i][width - j - 1].G);
+                        swap(data[i][j].B,data[i][width - j - 1].B);
                     }
                 }
             }
-        }
+        }```
 - 功能3：实现对图像亮度的调整，此功能依赖于对RGB三原色的共同增加
 - 功能4：实现对图像冷暖色的调整，此功能依赖于对单独通道的调整。
         功能3与功能4逻辑相同，都是对RGB三原色的调整，在判定为某种操作后，遍历所有像素点对RGB
     进行增加（减少）。
         代码如下：
+          ```c++
             void Image::Add(double delta)
             {
                 for (int i = 0; i < height; i++)
@@ -119,7 +121,7 @@
                         else if(data[i][j].B>255) data[i][j].B=255;
                     }
                 }
-            }
+            }```
 - 功能5：将两张照片拼接合并，此功能依赖于不同像素点信息的复制与填充。
 - 功能6：为了实现以上对图片的操作，重构了上学期"readbmp"与"writebmp"函数，使其适应对于
 彩色图片的处理
@@ -133,14 +135,16 @@
 openimage与save函数；同时在调用相应的图片函数后，调用了相应的qlabel中setpixmap函数，实现了
 处理好的图片在label控件中的显示.
         实现显示的代码如下：
+        ```
             QImage* img_seen = operational_img.toQImage(operational_img);
             ui->label->setPixmap(QPixmap::fromImage(*img_seen));
-            ui->label->setAlignment(Qt::AlignCenter);
+            ui->label->setAlignment(Qt::AlignCenter);```
 
         以下代码体现了信号与槽，用于对象之间的通信，为各个按钮添加相应的被调函数并实现所选操作。
     在Qt中，发送对象、发送的信号、接收对象、槽可以通过很多种方式进行连接。在此我们使用connect+宏
     的方式进行通信连接。
         具体实现如下：
+        ```
             connect(ui->actionopen, SIGNAL(triggered(bool)), this, SLOT(OpenImg()));
             connect(ui->actionsave, SIGNAL(triggered(bool)), this, SLOT(Save()));
             connect(ui->button_guassion, SIGNAL(clicked(bool)), this, SLOT(GaussionImg()));
@@ -154,7 +158,9 @@ openimage与save函数；同时在调用相应的图片函数后，调用了相�
             connect(ui->button_cat,SIGNAL(clicked(bool)),this,SLOT(Cat()));
             connect(ui->button_warm,SIGNAL(clicked(bool)),this,SLOT(warm()));
             connect(ui->button_cold,SIGNAL(clicked(bool)),this,SLOT(cold()));
+            connect(ui->button_big,SIGNAL(clicked(bool)),this,SLOT(big()));          
             ui->label->setFrameShape(QFrame::Box);
+        ```
 
 
 
