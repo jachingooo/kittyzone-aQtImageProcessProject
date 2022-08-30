@@ -140,9 +140,9 @@ openimage与save函数；同时在调用相应的图片函数后，调用了相�
 处理好的图片在label控件中的显示.
         实现显示的代码如下：
         ```
-            QImage* img_seen = operational_img.toQImage(operational_img);
-            ui->label->setPixmap(QPixmap::fromImage(*img_seen));
-            ui->label->setAlignment(Qt::AlignCenter);
+            QImage* img_seen = operational_img.toQImage(operational_img);  
+            ui->label->setPixmap(QPixmap::fromImage(*img_seen));  
+            ui->label->setAlignment(Qt::AlignCenter);  
         ```
 
         以下代码体现了信号与槽，用于对象之间的通信，为各个按钮添加相应的被调函数并实现所选操作。
