@@ -1,13 +1,7 @@
-﻿#include "Image.h"
+#include "tuxiang.h"
 #include<iostream>
 
 
-void chg(double& a, double& b)
-{
-    unsigned char t = a;
-    a = b;
-    b = t;
-}
 
 QImage* Image::toQImage(Image n)
 {
@@ -144,6 +138,12 @@ void Image::WriteBMP(const char* filename)
         }
     }
     fclose(fp2);
+}
+void chg(double& a, double& b)
+{
+    unsigned char t = a;
+    a = b;
+    b = t;
 }
 
 //false 左右，true 上下;
@@ -318,39 +318,17 @@ void Image::Cat(Image& m, int code)
     width = newWidth;
 }
 
-void Image::Warm(double delta)
-{
-    for (int i{ 0 }; i < height; i++)
-    {
-        for (int j{ 0 }; j < width; j++)
-        {
-            data[i][j].R-=delta;
-            if(data[i][j].R<0)  data[i][j].R=0;
-            else if(data[i][j].R>255) data[i][j].R=255;
-
-            data[i][j].G-=delta;
-            if(data[i][j].G<0)  data[i][j].G=0;
-            else if(data[i][j].G>255) data[i][j].G=255;
-
-            data[i][j].B+=delta;
-            if(data[i][j].B<0)  data[i][j].B=0;
-            else if(data[i][j].B>255) data[i][j].B=255;
-        }
-    }
-}
-
 void Image::Cold(double delta)
 {
     for (int i{ 0 }; i < height; i++)
     {
         for (int j{ 0 }; j < width; j++)
         {
-
             data[i][j].R+=delta;
             if(data[i][j].R<0)  data[i][j].R=0;
             else if(data[i][j].R>255) data[i][j].R=255;
 
-            data[i][j].G+=delta;
+            data[i][j].G-=delta;
             if(data[i][j].G<0)  data[i][j].G=0;
             else if(data[i][j].G>255) data[i][j].G=255;
 
@@ -360,3 +338,153 @@ void Image::Cold(double delta)
         }
     }
 }
+int Image:: Sort(int a1[],int n){
+        int k;
+        int j;
+        int c;
+        for (int i = 0;i<n;i++)
+        {
+            k = i;
+            for(j = k +1;j<n;j++)
+            {
+            if (a1[i]>a1[j])
+            {
+                c = a1[j];
+                a1[j] = a1[i];
+                a1[i] = c;
+            }
+            }
+        }
+        return a1[n/2];
+}
+QImage* Image::SmoothMedianRGB(Image n)
+{   uchar* data = new unsigned char[n.GetHeight()*n.GetWidth()*3];
+    uchar* newdata = data;
+    QImage* image = new QImage(newdata,n.GetWidth(),n.GetHeight(),QImage::Format_ARGB32);
+    QImage* newImage = new QImage(image->width(),image->height(),QImage::Format_ARGB32);
+    int kernel [3][3] = {
+    {1,1,1},
+    {1,1,1},
+    {1,1,1}};
+    int sizeKernel = 3;
+    int sizeKernel1= sizeKernel* sizeKernel;
+    int sumKernel = 1;
+    QColor color;
+     for(int x = sizeKernel/2;x<image->width() - sizeKernel/2;x++)
+    {
+       for(int y= sizeKernel/2;y<image->height() - sizeKernel/2;y++)
+        {
+           int * rgb1 = new int [ sizeKernel1];
+           int * rgb2 = new int [sizeKernel1];
+           int * rgb3 = new int [sizeKernel1];
+           int rgb = 0;
+            int r = 0;
+            int g = 0;
+            int b = 0;
+            for(int i = -sizeKernel/2;i<=sizeKernel/2;i++)
+            {
+               for(int j = -sizeKernel/2;j<=sizeKernel/2;j++)
+                {
+                 color = QColor(image->pixel(x+i,y+j));
+
+                 rgb1[rgb]=color.red()*kernel[sizeKernel/2+i][sizeKernel/2+j];
+                 rgb2[rgb]=color.green()*kernel[sizeKernel/2+i][sizeKernel/2+j];
+                 rgb3[rgb]=color.blue()*kernel[sizeKernel/2+i][sizeKernel/2+j];
+                 rgb ++;
+                 if (rgb == sizeKernel1)
+                 {
+                     r = Sort(rgb1,sizeKernel1);
+                     g = Sort(rgb2,sizeKernel1);
+                     b = Sort(rgb3,sizeKernel1);
+                 }
+                }
+            }
+            r = qBound(0,r/sumKernel,255);
+            g = qBound(0,g/sumKernel,255);
+            b = qBound(0,b/sumKernel,255);
+            newImage->setPixel(x,y,qRgb( r,g,b));
+            delete [] rgb1;
+            delete [] rgb2;
+            delete [] rgb3;
+        }
+    }
+
+    return newImage;
+
+
+}
+void Image::Warm(double delta)
+{
+    for (int i{ 0 }; i < height; i++)
+    {
+        for (int j{ 0 }; j < width; j++)
+        {
+
+            data[i][j].R-=delta;
+            if(data[i][j].R<0)  data[i][j].R=0;
+            else if(data[i][j].R>255) data[i][j].R=255;
+
+            data[i][j].G+=delta;
+            if(data[i][j].G<0)  data[i][j].G=0;
+            else if(data[i][j].G>255) data[i][j].G=255;
+
+            data[i][j].B+=delta;
+            if(data[i][j].B<0)  data[i][j].B=0;
+            else if(data[i][j].B>255) data[i][j].B=255;
+        }
+    }
+}
+void Image::Big(int code){
+
+    height = infohead.biHeight;
+    width = infohead.biWidth;
+    infohead.biSizeImage = height * width;
+    if (code == 0)
+            {
+                int h = height / 2;
+                int w = width / 2;
+                DATA** d;
+                d = (DATA**)malloc(sizeof( DATA*) * h);
+                for (int i = 0; i < h; i++)
+                {
+                    d[i] = (DATA*)malloc(w*3);
+                    for (int j = 0; j < w*3; j++)
+                    {
+                        d[i][j] = data[2 * i][2 * j];
+                    }
+                }
+                height = h;
+                width = w;
+                infohead.biWidth = width;
+                infohead.biHeight = height;
+                data = d;
+
+            }
+            if(code==1)
+            {
+                int h = height * 4;
+                int w = width * 4;
+                DATA** d;
+                d = (DATA**)malloc(sizeof(DATA*) * h);
+                for (int i = 0; i < h; i++)
+                {
+                    d[i] = (DATA*)malloc(w * 3);
+                    for (int j = 0; j < w*3; j++)
+                    {
+                        d[i][j] = data[i / 4][j / 4];
+                    }
+                }
+                height = h;
+                width = w;
+                data = d;
+                ih.biWidth = width;
+                ih.biHeight = height;
+                data = d;
+                height = h;
+                width = w;
+                this->WriteBMP("放大.bmp");
+                this->ReadBMP("放大.bmp");
+            }
+
+}
+
