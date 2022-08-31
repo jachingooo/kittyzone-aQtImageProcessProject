@@ -1,7 +1,7 @@
-﻿#include "mainwindow.h"
+#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Filter.h"
-#include "Gaussion.h"
+#include "gaussion.h"
 #include "SharpenFilter.h"
 #include <QDebug>
 #include <iostream>
@@ -32,8 +32,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->button_cat,SIGNAL(clicked(bool)),this,SLOT(Cat()));
     connect(ui->button_warm,SIGNAL(clicked(bool)),this,SLOT(warm()));
     connect(ui->button_cold,SIGNAL(clicked(bool)),this,SLOT(cold()));
-
+    connect(ui->button_big,SIGNAL(clicked(bool)),this,SLOT(big()));
+    connect(ui->button_media,SIGNAL(clicked(bool)),this,SLOT(smoothMedianRGB()));
     ui->label->setFrameShape(QFrame::Box);
+    ui->label_2->setFrameShape(QFrame::Box);
 }
 
 void MainWindow::OpenImg()
@@ -53,6 +55,8 @@ void MainWindow::OpenImg()
         QImage* img_seen = operational_img.toQImage(operational_img);
         ui->label->setPixmap(QPixmap::fromImage(*img_seen));
         ui->label->setAlignment(Qt::AlignCenter);
+        ui->label_2->setPixmap(QPixmap::fromImage(*img_seen));
+        ui->label_2->setAlignment(Qt::AlignCenter);
      }
 
     //显示所示图片的路径
@@ -249,3 +253,20 @@ void MainWindow::cold()
     ui->label->setAlignment(Qt::AlignCenter);
 
 }
+
+void MainWindow::smoothMedianRGB(){
+   QImage* img_seen = operational_img.SmoothMedianRGB(operational_img);
+   ui->label->setPixmap(QPixmap::fromImage(*img_seen));
+   ui->label->setAlignment(Qt::AlignCenter);
+}
+
+
+void MainWindow::big(int code)
+{
+    operational_img.Big(0);
+    //显示
+    QImage* img_seen = operational_img.toQImage(operational_img);
+    ui->label->setPixmap(QPixmap::fromImage(*img_seen));
+    ui->label->setAlignment(Qt::AlignCenter);
+}
+
