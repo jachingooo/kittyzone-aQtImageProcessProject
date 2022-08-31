@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include<QString>
 #include<QImage>
 #pragma pack(push,1)
@@ -71,13 +71,15 @@ public:
     void Cat(Image& m, int code);
     void Cold(double delta);
     void Warm(double delta);
+    void Big(int code);
+    int Sort(int a1[],int n);
     QImage* toQImage(Image n);
+    QImage* SmoothMedianRGB(Image image);
+
 
 private:
     int height;
     int width;
     DATA** data;
+    BITMAPINFOHEADER ih;
 };
-
-
-
